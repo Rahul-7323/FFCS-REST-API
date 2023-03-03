@@ -1,11 +1,92 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
+// setting the database as postgresql
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// Faculty schema
+// One faculty can have many courses
+// assuming that a faculty can teach at all slots for a course
+// as it is not mentioned clearly in the requirements
+model Faculty {
+  id String @id
+  name String
+  courses Course[]
+}
+
+// Course schema
+// One course can have many faculties
+// One course can have many slots
+model Course {
+  id String @id
+  name String
+  faculties Faculty[]
+  course_type String
+  allowed_slots Slot[]
+  registered_students StudentCourseRegister[]
+}
+
+// Slot schema
+// One Slot can have many timings
+model Slot {
+  id String @id
+  courseId String
+  course Course @relation(fields: [courseId], references: [id])
+  timings Timing[]
+  registered_slots SelectedSlot[]
+}
+
+// Timing schema
+// Each of the timings belong to exactly one course
+// This model doesn't have a primary key, it only has a foreign key
+// as the id of the slot to which it belongs to.
+model Timing {
+  day String
+  start String
+  end String
+  slotId String
+  slot Slot @relation(fields: [slotId], references: [id])
+  @@id([slotId, day, start, end])
+}
+
+// Student schema
+// One student can have many registered courses
+// We can't use a simple many-to-many relation to model the relationship between student and course
+// because one student could have registered for only a few slots out of all the slots present in the course
+// Hence we have to use an explicit many-to-many relation and create a separate table for registered courses
+model Student {
+  id String @id
+  name String
+  registered_courses StudentCourseRegister[]
+}
+
+// StudentCourseRegister schema
+// This schema represents the many-to-many relationship between student and course
+// A seperate schema for this relationship has been created because additional
+// data (or metadata) about this relationship has to be stored such as the slots
+// that were registered for within a specific course
+model StudentCourseRegister {
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
+  courseId String
+  course Course @relation(fields: [courseId], references: [id])
+  selected_slots SelectedSlot[]
+  @@id([studentId, courseId])
+}
+
+// SelectedSlot schema
+// This schema represents the slots that a student took in each course
+// for a given student-course pair, this table will contain all the slots
+// that the student selected for that course out of all the available slots
+model SelectedSlot {
+  slotId String
+  slot Slot @relation(fields: [slotId], references: [id])
+  studentId String
+  courseId String
+  student_course_register StudentCourseRegister @relation(fields: [studentId, courseId], references: [studentId, courseId])
+  @@id([slotId, studentId, courseId])
 }
