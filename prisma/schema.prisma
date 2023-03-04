@@ -16,6 +16,7 @@ model Faculty {
   id String @id
   name String
   courses Course[]
+  registrations StudentCourseRegister[]
 }
 
 // Course schema
@@ -66,13 +67,17 @@ model Student {
 
 // StudentCourseRegister schema
 // This schema represents the many-to-many relationship between student and course
+// and also stores the faculty that will be teaching this course
 // A seperate schema for this relationship has been created because additional
 // data (or metadata) about this relationship has to be stored such as the slots
-// that were registered for within a specific course
+// that were registered for within a specific course and the faculty under which the
+// student has registered
 model StudentCourseRegister {
   studentId String
   student Student @relation(fields: [studentId], references: [id])
   courseId String
+  facultyId String
+  faculty Faculty @relation(fields: [facultyId], references: [id])
   course Course @relation(fields: [courseId], references: [id])
   selected_slots SelectedSlot[]
   @@id([studentId, courseId])
