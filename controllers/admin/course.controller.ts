@@ -37,6 +37,8 @@ const createCourse = async (req: any, res: any, next: any) => {
   let course;
 
   try {
+    // making use of "nested include" because we have to include
+    // the faculties and allowed slots in the response
     course = await prisma.course.create({
       data: {
         id,

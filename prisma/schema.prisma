@@ -32,10 +32,10 @@ model Course {
 
 // Slot schema
 // One Slot can have many timings
+// One Slot can have many courses
 model Slot {
   id String @id
-  courseId String
-  course Course @relation(fields: [courseId], references: [id])
+  courses Course[]
   timings Timing[]
   registered_slots SelectedSlot[]
 }

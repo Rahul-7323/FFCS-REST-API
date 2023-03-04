@@ -11,6 +11,10 @@ const getCourseById = async (req: any, res: any, next: any) => {
       where: {
         id: courseId,
       },
+      include: {
+        allowed_slots: true,
+        faculties: true,
+      },
     });
   } catch (err) {
     const error = new Error("Something went wrong in the server");
@@ -24,7 +28,15 @@ const getCourseById = async (req: any, res: any, next: any) => {
     return next(error);
   }
 
-  res.json({success: true, data: course});
+  const _course = {
+    id: course.id,
+    name: course.name,
+    course_type: course.course_type,
+    slot_ids: course.allowed_slots.map((slot) => slot.id),
+    faculty_ids: course.faculties.map((faculty) => faculty.id),
+  };
+
+  res.json({success: true, data: _course});
 };
 
 const getCourses = async (req: any, res: any, next: any) => {
