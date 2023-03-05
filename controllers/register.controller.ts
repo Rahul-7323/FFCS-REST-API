@@ -171,10 +171,35 @@ const register = async (req: any, res: any, next: any) => {
       include: {
         registered_courses: {
           include: {
-            course: true,
+            course: {
+              include: {
+                faculties: true,
+                allowed_slots: {
+                  include: {
+                    timings: {
+                      select: {
+                        day: true,
+                        start: true,
+                        end: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
             selected_slots: {
               include: {
-                slot: true,
+                slot: {
+                  include: {
+                    timings: {
+                      select: {
+                        day: true,
+                        start: true,
+                        end: true,
+                      },
+                    },
+                  },
+                },
               },
             },
           },
