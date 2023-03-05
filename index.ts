@@ -1,8 +1,10 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 import express from "express";
 import http from "http";
 import bodyParser from "body-parser";
+import jwt from "jsonwebtoken";
 
 import facultyRoutes from "./routes/faculty.route";
 import facultyAdminRoutes from "./routes/admin/faculty.route";
@@ -12,6 +14,15 @@ import slotRoutes from "./routes/slot.route";
 import slotAdminRoutes from "./routes/admin/slot.route";
 import studentRoutes from "./routes/student.route";
 import studentAdminRoutes from "./routes/admin/student.route";
+
+// generate the token for the admin user
+// don't do this in production
+const adminToken = jwt.sign(
+  {id: "admin007", role: "admin"},
+  process.env.JWT_SECRET!
+);
+
+console.log("Admin Token: " + adminToken);
 
 const app = express();
 const server = http.createServer(app);
@@ -30,15 +41,13 @@ app.use((req, res, next) => {
 });
 
 app.use("/faculty", facultyRoutes);
-app.use("/admin/faculty", facultyAdminRoutes);
-
 app.use("/course", courseRoutes);
-app.use("/admin/course", courseAdminRoutes);
-
 app.use("/slot", slotRoutes);
-app.use("/admin/slot", slotAdminRoutes);
-
 app.use("/student", studentRoutes);
+
+app.use("/admin/faculty", facultyAdminRoutes);
+app.use("/admin/course", courseAdminRoutes);
+app.use("/admin/slot", slotAdminRoutes);
 app.use("/admin/student", studentAdminRoutes);
 
 app.use((req, res, next) => {
