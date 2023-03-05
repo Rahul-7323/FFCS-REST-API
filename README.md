@@ -98,3 +98,7 @@ The following features are implemented:
     ```
     output (the timetable part alone):
     ![test_suite_output](images/test_suite_output.png)
+
+## ER Diagram
+
+![ERD](images/ERD.png)
