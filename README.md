@@ -65,7 +65,7 @@ The following features are implemented:
 7. Open a new terminal window and clone the below repository for the test suite. This repository is a fork of dyte's official test suite for this API. I have simply fixed the errors that occured due to request body and headers, nothing else has been changed. After cloning, move to that folder.
    ```bash
    git clone https://github.com/Rahul-7323/vit-hiring-2023-phase1-test.git
-   cd vit-hiring-2023-phase-1-Rahul-7323
+   cd vit-hiring-2023-phase1-test
    ```
 8. Replace the `TOKEN` in `ADMIN_AUTH_TOKEN` and `STUDENT_AUTH_TOKEN` in main.py with `Admin Token` and `Student Token` that we got previously. Please note that the prefix `Bearer` is present in the authorization header as per norms and is NOT part of the token, the server will extract the token alone from the header automatically.
 
