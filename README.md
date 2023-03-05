@@ -103,3 +103,9 @@ The following features are implemented:
 
 (generated from the prisma schema using prisma-erd-generator)
 ![ERD](images/ERD.png)
+
+## Contact
+
+Name - Rahul M (20BRS1121)
+Email - <rahulmuralidaran7@gmail.com>
+Linkedin - [rahul-m-9325611b8](https://www.linkedin.com/in/rahul-m-9325611b8/)
