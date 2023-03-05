@@ -12,7 +12,12 @@ const createFaculty = async (req: any, res: any, next: any) => {
     return next(error);
   }
 
-  const {id, name}: {id: string; name: string} = req.body;
+  let {id, name}: {id: string; name: string} = req.body;
+
+  // if id is not given, then assume that name is the id
+  if (id === undefined) {
+    id = name;
+  }
 
   let faculty;
 

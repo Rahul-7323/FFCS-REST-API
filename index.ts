@@ -14,15 +14,14 @@ import slotRoutes from "./routes/slot.route";
 import slotAdminRoutes from "./routes/admin/slot.route";
 import studentRoutes from "./routes/student.route";
 import studentAdminRoutes from "./routes/admin/student.route";
+import registerRouter from "./routes/register.route";
+import timetableRouter from "./routes/timetable.router";
 
-// generate the token for the admin user
-// don't do this in production
-const adminToken = jwt.sign(
-  {id: "admin007", role: "admin"},
-  process.env.JWT_SECRET!
-);
+import {createDummyAdmin, createDummyStudent} from "./utils/create_dummy_users";
 
-console.log("Admin Token: " + adminToken);
+// create dummy admin and student
+createDummyAdmin();
+createDummyStudent();
 
 const app = express();
 const server = http.createServer(app);
@@ -44,6 +43,8 @@ app.use("/faculty", facultyRoutes);
 app.use("/course", courseRoutes);
 app.use("/slot", slotRoutes);
 app.use("/student", studentRoutes);
+app.use("/register", registerRouter);
+app.use("/timetable", timetableRouter);
 
 app.use("/admin/faculty", facultyAdminRoutes);
 app.use("/admin/course", courseAdminRoutes);
