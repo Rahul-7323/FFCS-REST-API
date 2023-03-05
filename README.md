@@ -106,6 +106,6 @@ The following features are implemented:
 
 ## Contact
 
-Name - Rahul M (20BRS1121)
-Email - <rahulmuralidaran7@gmail.com>
-Linkedin - [rahul-m-9325611b8](https://www.linkedin.com/in/rahul-m-9325611b8/)
+- Name - Rahul M (20BRS1121)
+- Email - <rahulmuralidaran7@gmail.com>
+- Linkedin - [rahul-m-9325611b8](https://www.linkedin.com/in/rahul-m-9325611b8/)
