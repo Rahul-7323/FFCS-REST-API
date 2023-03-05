@@ -101,4 +101,5 @@ The following features are implemented:
 
 ## ER Diagram
 
+(generated from the prisma schema using prisma-erd-generator)
 ![ERD](images/ERD.png)
